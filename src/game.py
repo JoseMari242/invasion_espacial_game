@@ -17,8 +17,7 @@ class Game:
         self.jugador = Player()
 
         # Crear los enemigos
-        self.cantidad_enemigos = 8
-        self.enemigos = [Enemy() for _ in range(self.cantidad_enemigos)]
+        self.enemigos = [Enemy(tipo='grande') for _ in range(3)]  # Empezamos con 3 enemigos grandes
 
         # Variables de la bala
         self.img_bala = pygame.image.load(os.path.join(base_dir, '../assets/images/bala.png'))
@@ -134,7 +133,9 @@ class Game:
                     self.bala_y = 500
                     self.bala_visible = False
                     self.puntaje += 1
-                    enemigo.reiniciar()
+                    nuevos_enemigos = enemigo.dividir()
+                    self.enemigos.remove(enemigo)
+                    self.enemigos.extend(nuevos_enemigos)
 
                 enemigo.mostrar(self.pantalla)
 
