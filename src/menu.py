@@ -1,7 +1,6 @@
 import pygame
 import os
 
-
 class Inicio:
     def __init__(self, pantalla):
         self.pantalla = pantalla
@@ -29,7 +28,7 @@ class Inicio:
                 if evento.type == pygame.MOUSEBUTTONDOWN:
                     mouse_pos = pygame.mouse.get_pos()
                     if self.boton_rect_start.collidepoint(mouse_pos):
-                        ejecutando = False
+                        ejecutando = False  # Salir del menú para iniciar el juego
                     if self.boton_rect_instrucciones.collidepoint(mouse_pos):
                         mostrar_instrucciones = True
 
@@ -59,7 +58,6 @@ class Inicio:
             pygame.display.update()
 
     def mostrar_instrucciones(self):
-        # Aquí puedes implementar la pantalla de instrucciones, por ahora, simplemente se muestra un mensaje.
         ejecutando = True
         while ejecutando:
             for evento in pygame.event.get():
@@ -72,13 +70,3 @@ class Inicio:
             instrucciones = self.fuente_boton.render("Instrucciones del juego", True, (255, 255, 255))
             self.pantalla.blit(instrucciones, (100, 250))
             pygame.display.update()
-
-
-# Código para inicializar Pygame y el menú
-if __name__ == "__main__":
-    pygame.init()
-    pantalla = pygame.display.set_mode((800, 600))
-    pygame.display.set_caption("Invasión Espacial")
-    menu = Inicio(pantalla)
-    menu.mostrar_menu()
-    pygame.quit()
