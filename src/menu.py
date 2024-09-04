@@ -28,7 +28,8 @@ class Inicio:
                 if evento.type == pygame.MOUSEBUTTONDOWN:
                     mouse_pos = pygame.mouse.get_pos()
                     if self.boton_rect_start.collidepoint(mouse_pos):
-                        ejecutando = False  # Salir del menú para iniciar el juego
+                        nombre_jugador = self.pedir_nombre_jugador()
+                        return nombre_jugador  # Retorna el nombre del jugador para usar en el juego
                     if self.boton_rect_instrucciones.collidepoint(mouse_pos):
                         mostrar_instrucciones = True
 
@@ -56,6 +57,39 @@ class Inicio:
                                (self.boton_rect_instrucciones.x + 10, self.boton_rect_instrucciones.y + 10))
 
             pygame.display.update()
+
+    def pedir_nombre_jugador(self):
+        nombre_jugador = ""
+        fuente = pygame.font.Font(None, 74)
+        entrada_activa = True
+        texto = fuente.render("Ingresa tu nombre:", True, (255, 255, 255))
+        caja_texto = pygame.Rect(200, 300, 400, 50)
+        color_caja = pygame.Color('lightskyblue3')
+        while entrada_activa:
+            for evento in pygame.event.get():
+                if evento.type == pygame.QUIT:
+                    pygame.quit()
+                    exit()
+                if evento.type == pygame.KEYDOWN:
+                    if evento.key == pygame.K_RETURN:
+                        entrada_activa = False
+                    elif evento.key == pygame.K_BACKSPACE:
+                        nombre_jugador = nombre_jugador[:-1]
+                    else:
+                        nombre_jugador += evento.unicode
+
+            self.pantalla.fill((0, 0, 0))
+            self.pantalla.blit(texto, (200, 200))
+            txt_surface = fuente.render(nombre_jugador, True, color_caja)
+            width = max(200, txt_surface.get_width()+10)
+            caja_texto.w = width
+            self.pantalla.blit(txt_surface, (caja_texto.x+5, caja_texto.y+5))
+            pygame.draw.rect(self.pantalla, color_caja, caja_texto, 2)
+
+            pygame.display.flip()
+            pygame.time.Clock().tick(30)
+
+        return nombre_jugador
 
     def mostrar_instrucciones(self):
         ejecutando = True
