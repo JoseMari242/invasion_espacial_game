@@ -5,8 +5,8 @@ class Inicio:
     def __init__(self, pantalla):
         self.pantalla = pantalla
         base_dir = os.path.dirname(__file__)
-        self.fondo = pygame.image.load(os.path.join(base_dir, '../assets/images/Menu.jpg'))
-        self.fondo_rect = self.fondo.get_rect()
+        self.fondo_menu = pygame.image.load(os.path.join(base_dir, '../assets/images/Menu.jpg'))
+        self.fondo_rect = self.fondo_menu.get_rect()
 
         self.fuente_titulo = pygame.font.Font(os.path.join(base_dir, '../assets/fonts/Simple.otf'), 80)
         self.fuente_boton = pygame.font.Font(os.path.join(base_dir, '../assets/fonts/Simple.otf'), 40)
@@ -39,7 +39,7 @@ class Inicio:
                 continue
 
             # Dibuja el fondo
-            self.pantalla.blit(self.fondo, self.fondo_rect)
+            self.pantalla.blit(self.fondo_menu, self.fondo_rect)
 
             # Mostrar título
             titulo = self.fuente_titulo.render("Invasión Espacial", True, self.color_titulo)
@@ -65,6 +65,7 @@ class Inicio:
         texto = fuente.render("Ingresa tu nombre:", True, (255, 255, 255))
         caja_texto = pygame.Rect(200, 300, 400, 50)
         color_caja = pygame.Color('lightskyblue3')
+
         while entrada_activa:
             for evento in pygame.event.get():
                 if evento.type == pygame.QUIT:
@@ -78,7 +79,9 @@ class Inicio:
                     else:
                         nombre_jugador += evento.unicode
 
-            self.pantalla.fill((0, 0, 0))
+            # Dibuja el fondo del menú
+            self.pantalla.blit(self.fondo_menu, (0, 0))
+
             self.pantalla.blit(texto, (200, 200))
             txt_surface = fuente.render(nombre_jugador, True, color_caja)
             width = max(200, txt_surface.get_width()+10)
@@ -100,7 +103,9 @@ class Inicio:
                 if evento.type == pygame.KEYDOWN or evento.type == pygame.MOUSEBUTTONDOWN:
                     ejecutando = False
 
-            self.pantalla.fill((0, 0, 0))
+            # Dibuja el fondo del menú
+            self.pantalla.blit(self.fondo_menu, (0, 0))
+
             instrucciones = self.fuente_boton.render("Instrucciones del juego", True, (255, 255, 255))
             self.pantalla.blit(instrucciones, (100, 250))
             pygame.display.update()

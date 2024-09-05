@@ -10,6 +10,7 @@ class Game:
         self.nombre_jugador = nombre_jugador
         base_dir = os.path.dirname(__file__)
         self.fondo = pygame.image.load(os.path.join(base_dir, '../assets/images/Fondo.jpg'))
+        self.fondo_menu = pygame.image.load(os.path.join(base_dir, '../assets/images/Menu.jpg'))  # Fondo del menú
         pygame.mixer.music.load(os.path.join(base_dir, '../assets/sounds/MusicaFondo.mp3'))
         pygame.mixer.music.play(-1)
 
@@ -44,7 +45,7 @@ class Game:
             for evento in pygame.event.get():
                 if evento.type == pygame.QUIT:
                     pygame.quit()
-                    return
+                    exit()  # Salir de la aplicación
 
                 # Manejar clic del ratón
                 if evento.type == pygame.MOUSEBUTTONDOWN:
@@ -54,9 +55,11 @@ class Game:
                         return "volver_inicio"
                     if boton_salir.collidepoint(mouse_pos):
                         pygame.quit()
-                        return
+                        exit()  # Salir de la aplicación
 
-            self.pantalla.fill((0, 0, 0))
+            # Dibuja el fondo del menú
+            self.pantalla.blit(self.fondo_menu, (0, 0))
+
             game_over_texto = self.fuente_final.render("GAME OVER", True, (255, 0, 0))
             self.pantalla.blit(game_over_texto, (250, 150))
 
@@ -85,7 +88,9 @@ class Game:
 
             for evento in pygame.event.get():
                 if evento.type == pygame.QUIT:
-                    se_ejecuta = False
+                    pygame.quit()
+                    exit()  # Salir de la aplicación
+
                 if evento.type == pygame.KEYDOWN:
                     if evento.key == pygame.K_LEFT:
                         self.jugador.mover_izquierda()
@@ -154,3 +159,4 @@ class Game:
     def disparar_bala(self, x, y):
         self.bala_visible = True
         self.pantalla.blit(self.img_bala, (x + 16, y + 10))
+
