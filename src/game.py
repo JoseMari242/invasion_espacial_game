@@ -65,7 +65,7 @@ class Game:
 
             puntuacion_texto = self.fuente_final.render(
                 f"{self.nombre_jugador}, tu puntuación ha sido: {self.puntaje}", True, (255, 255, 255))
-            self.pantalla.blit(puntuacion_texto, (150, 250))
+            self.pantalla.blit(puntuacion_texto, (120, 250))
 
             pygame.draw.rect(self.pantalla, (255, 190, 0), boton_volver_inicio)
             boton_texto_volver = self.fuente.render("Volver al Inicio", True, (255, 255, 255))
@@ -159,4 +159,3 @@ class Game:
     def disparar_bala(self, x, y):
         self.bala_visible = True
         self.pantalla.blit(self.img_bala, (x + 16, y + 10))
-
